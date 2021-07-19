@@ -26,7 +26,8 @@ app.use(
     }),
 );
 
-app.get('/v0/dummy', dummy.get);
+// This is a test - commented out the line underneath this one
+// app.get('/v0/dummy', dummy.get);
 // Your routes go here
 
 app.use((err, req, res, next) => {
