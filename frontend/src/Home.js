@@ -1,6 +1,7 @@
 import React from 'react';
-
 import Emoji from './Emoji';
+
+import Workspaces from './Workspaces';
 
 /**
  * Simple component with no state.
@@ -33,6 +34,7 @@ function Home() {
   const [emoji, setEmoji] = React.useState(false);
   return (
     <div>
+      <Workspaces/>
       <h3 id='instruction'>
         Click button to connect to the Backend dummy endpoint</h3>
       <button
@@ -49,6 +51,7 @@ function Home() {
       <hr/>
       <a href='/Login'>Login</a>
       <p/>
+
 
       <button
         onClick={(event) => {
