@@ -46,8 +46,8 @@ function Home() {
       <label>{dummy}</label>
 
       <p/>
-        <hr/>
-        <a href='/Login'>Login</a>
+      <hr/>
+      <a href='/Login'>Login</a>
       <p/>
 
       <button
