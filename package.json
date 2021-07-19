@@ -1,0 +1,17 @@
+{
+  "name": "cse183-assignment8",
+  "version": "1.0.0",
+  "description": "CSE183 Assignment 8",
+  "author": "David Harrison <dcharris@ucsc.edu>",
+  "license": "UNLICENSED",
+  "repository": "none",
+  "devDependencies": {
+    "bestzip": "^2.1.7"
+  },
+  "scripts": {
+    "backend": "cd backend && npm start",
+    "frontend": "cd frontend && npm start",
+    "start": "(npm run backend) & (npm run frontend)",
+    "zip": "bestzip Assignment8.Submission.zip frontend/src/* backend/sql/* backend/src/* backend/api/*"
+  }
+}
