@@ -32,6 +32,7 @@ function Login() {
         return res.json();
       })
       .then((json) => {
+        console.log('set token');
         localStorage.setItem('user', JSON.stringify(json));
         history.push('/');
       })

@@ -20,7 +20,6 @@ const apidoc = yaml.load(fs.readFileSync(apiSpec, 'utf8'));
 app.use('/v0/api-docs', swaggerUi.serve, swaggerUi.setup(apidoc));
 
 app.post('/authenticate',  auth.authenticate);
-
 app.use(
     OpenApiValidator.middleware({
       apiSpec: apiSpec,

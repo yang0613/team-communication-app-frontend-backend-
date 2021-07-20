@@ -55,48 +55,48 @@ function Workspaces() {
         </Toolbar>
       </AppBar>
       <div style={{visibility: dropDownMenu ? 'visible' : 'hidden'}}>
-      <Typography variant="h6" className={classes.dropDownCategories}>
-        ⓥ Channels
-      </Typography><br/>
-      <IconButton className={classes.dropDownChannels} onClick={(event) => {
+        <Typography variant="h6" className={classes.dropDownCategories}>
+          ⓥ Channels
+        </Typography><br/>
+        <IconButton className={classes.dropDownChannels} onClick={(event) => {
           setAssignment1(!assignment1);
           setDropDownMenu(false);
         }}>
         # Assignment 1
-      </IconButton><br/>
-      <IconButton className={classes.dropDownChannels} onClick={(event) => {
+        </IconButton><br/>
+        <IconButton className={classes.dropDownChannels} onClick={(event) => {
           setAssignment2(!assignment2);
           setDropDownMenu(false);
         }}>
         # Assignment 2
-      </IconButton><br/>
-      <IconButton className={classes.dropDownChannels} onClick={(event) => {
+        </IconButton><br/>
+        <IconButton className={classes.dropDownChannels} onClick={(event) => {
           setAssignment3(!assignment3);
           setDropDownMenu(false);
         }}>
         # Assignment 3
-      </IconButton><br/>
-      <IconButton className={classes.dropDownChannels} onClick={(event) => {
+        </IconButton><br/>
+        <IconButton className={classes.dropDownChannels} onClick={(event) => {
           setAssignment4(!assignment4);
           setDropDownMenu(false);
         }}>
         # Assignment 4
-      </IconButton><br/>
-      <IconButton className={classes.dropDownChannels} onClick={(event) => {
+        </IconButton><br/>
+        <IconButton className={classes.dropDownChannels} onClick={(event) => {
           setGeneral(!general);
           setDropDownMenu(false);
         }}>
         # General
-      </IconButton><br/>
-      <IconButton className={classes.dropDownChannels} onClick={(event) => {
+        </IconButton><br/>
+        <IconButton className={classes.dropDownChannels} onClick={(event) => {
           setAddChannel(!addChannel);
           setDropDownMenu(false);
         }}>
         + Add Channel
-      </IconButton><br/>
-      <Typography variant="h6" className={classes.dropDownCategories}>
+        </IconButton><br/>
+        <Typography variant="h6" className={classes.dropDownCategories}>
         ⓥ Direct Messages
-      </Typography><br/>
+        </Typography><br/>
       </div>
     </div>
   );
