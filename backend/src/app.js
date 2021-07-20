@@ -8,7 +8,7 @@ const OpenApiValidator = require('express-openapi-validator');
 
 const auth = require('./auth');
 const dummy = require('./dummy');
-
+const workspace = require('./workspace');
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -29,7 +29,7 @@ app.use(
 );
 
 app.get('/v0/dummy', dummy.get);
-// Your routes go here
+app.get('/v0/workspace', auth.check, workspace.getAll)
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
@@ -40,3 +40,5 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
+
+
