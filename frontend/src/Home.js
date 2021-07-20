@@ -1,7 +1,7 @@
 import React from 'react';
 import Emoji from './Emoji';
-
 import Workspaces from './Workspaces';
+import {useHistory} from 'react-router-dom';
 
 /**
  * Simple component with no state.
@@ -27,14 +27,30 @@ function getDummy(setDummy) {
 /**
  * Simple component with no state.
  *
- * @return {object} JSX
+ * @return {Home} JSX
  */
 function Home() {
+  const history = useHistory();
+  const user = JSON.parse(localStorage.getItem('user'));
+
   const [dummy, setDummy] = React.useState('Click the button!');
   const [emoji, setEmoji] = React.useState(false);
+  const [name, setName] = React.useState(user ? user.name : '');
+
+  if (!user) {
+    history.push('/Login');
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setName('');
+    history.push('/Login');
+  };
+
   return (
     <div>
       <Workspaces/>
+      <h2>{name ? name : ''}</h2>
       <h3 id='instruction'>
         Click button to connect to the Backend dummy endpoint</h3>
       <button
@@ -49,7 +65,7 @@ function Home() {
 
       <p/>
       <hr/>
-      <a href='/Login'>Login</a>
+      <button onClick={handleLogout}>Logout</button>
       <p/>
 
 
