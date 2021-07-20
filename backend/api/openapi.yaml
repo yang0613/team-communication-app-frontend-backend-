@@ -30,6 +30,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /workspace:
+    get:
+      description: Returns the users workspaces
+      responses:
+        401:
+          description: Unauthorised
+        200:
+          description: Workspace response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspaces'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
   schemas:
     Error:
@@ -48,4 +67,17 @@ components:
         - message
       properties:
         message:
+          type: string
+
+    Workspaces:
+      type: array
+      items:
+        $ref: '#/components/schemas/Workspace'
+
+    Workspace:
+      type: object
+      properties:
+        username:
+          type: string
+        onlineStatus:
           type: string
