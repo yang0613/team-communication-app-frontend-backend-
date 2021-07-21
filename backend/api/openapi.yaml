@@ -34,7 +34,7 @@ paths:
     get:
       description: Returns the users workspaces
       parameters:
-      - name: id
+      - name: user_id
         in: query
         description: ID of the User
         required: true

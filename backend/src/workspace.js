@@ -25,7 +25,7 @@ const selectWorkspace = async (id) => {
   const {rows} = await pool.query(query);
   let workspaces = [];
   for(const row of rows) {
-    row.workspace.id = row.workspace_id;
+    row.workspace.workspace_id = row.workspace_id;
     workspaces.push(row.workspace);
   }
   return workspaces;
@@ -55,7 +55,7 @@ const selectWorkspace = async (id) => {
 
 
 exports.getAll = async(req, res) => {
-  const workspaces = await selectWorkspace(req.query.id);
+  const workspaces = await selectWorkspace(req.query.user_id);
   if(workspaces){
     res.status(200).json(workspaces);
   }else{

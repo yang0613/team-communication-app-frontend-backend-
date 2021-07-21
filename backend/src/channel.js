@@ -17,7 +17,7 @@ const selectChannels = async (id) => {
   const {rows} = await pool.query(query);
   let channels = [];
   for(const row of rows) {
-    row.channel.id = row.channel_id;
+    row.channel.channel_id = row.channel_id;
     channels.push(row.channel);
   }
   return channels;
