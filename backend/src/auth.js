@@ -13,8 +13,7 @@ const pool = new Pool({
 
 exports.authenticate = async (req, res) => {
   const { email, password } = req.body;
-  
-  let select = 'SELECT users FROM users WHERE email = $1';
+  let select = `SELECT * FROM users WHERE users->>'email' = $1`;
   const query = {
     text: select,
     values: [email],
@@ -28,7 +27,7 @@ exports.authenticate = async (req, res) => {
     const accessToken = jwt.sign(
       {email: user.email, role: user.role}, 
       secrets.accessToken, {
-        expiresIn: '1m',
+        expiresIn: '30m',
         algorithm: 'HS256'
       });
     res.status(200).json({name: user.name, accessToken: accessToken});

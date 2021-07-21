@@ -29,7 +29,9 @@ app.use(
 );
 
 app.get('/v0/dummy', dummy.get);
-app.get('/v0/workspace', auth.check, workspace.getAll)
+app.get('/v0/workspace', auth.check, workspace.getAll);
+app.post('/v0/workspace', auth.check, workspace.post);
+app.delete('/v0/workspace', auth.check, workspace.delete);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({

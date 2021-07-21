@@ -8,27 +8,30 @@ CREATE TABLE dummy(created TIMESTAMP WITH TIME ZONE);
 -- two cloumns, one workspace id, one for user id--
 
 DROP TABLE IF EXISTS users;
-CREATE TABLE users(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), users jsonb);
+CREATE TABLE users(users_id VARCHAR, users jsonb);
 
 DROP TABLE IF EXISTS workspace;
-CREATE TABLE workspace(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), workspace jsonb);
---json objects--
---workspace_name--
+CREATE TABLE workspace(workspace_id VARCHAR, workspace jsonb);
+-- json objects--
+-- workspace_name--
 
-DROP TABLE IF EXISTS channel;
-CREATE TABLE channel(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), workspace_id, channel jsonb);
+DROP TABLE IF EXISTS users_workspace;
+CREATE TABLE users_workspace(users_id VARCHAR, workspace_id VARCHAR);
+
+-- DROP TABLE IF EXISTS channel;
+-- CREATE TABLE channel(channel_id VARCHAR, workspace_id, channel jsonb);
 --json objects--
 --channel_name--
 --message--
 
-DROP TABLE IF EXISTS message;
-CREATE TABLE message(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), channel_id, message jsonb);
+-- DROP TABLE IF EXISTS message;
+-- CREATE TABLE message(message_id VARCHAR, channel_id, message jsonb);
 --json objects--
 --from_user--
 --text--
 
-DROP TABLE IF EXISTS directmessage;
-CREATE TABLE directmessage(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), from_user, to_user, directmessage jsonb);
+-- DROP TABLE IF EXISTS directmessage;
+-- CREATE TABLE directmessage(directmessage VARCHAR, from_user, to_user, directmessage jsonb);
 --json objects--
 --text--
 --status--
