@@ -19,84 +19,91 @@ const useStyles = makeStyles((theme) => ({
   dropDownCategories: {
     color: 'black',
   },
-  dropDownChannels: {
+  dropDownWorkspaces: {
     color: 'black',
     fontSize: 16,
   },
 }));
 
 /**
+ * Simple component with no state.
+ *
+ * @param {function} setWorkspaces set the dummy state
+ */
+const fetchWorkspaces = (setWorkspaces) => {
+  const item = localStorage.getItem('user');
+  if (!item) {
+    console.log('empty item');
+    return;
+  }
+  const user = JSON.parse(item);
+  const bearerToken = user ? user.accessToken : '';
+  fetch('http://localhost:3010/v0/workspace', {
+      method: 'get',
+      headers: new Headers({
+        'Authorization': `Bearer ${bearerToken}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      }),
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw response;
+      }
+      return response.json();
+    })
+    .then((json) => {
+      setWorkspaces(json.message);
+    })
+    .catch((error) => {
+      setWorkspaces(error.toString());
+    });
+};
+
+/**
  *
  * @return {Workspaces}
  */
 function Workspaces() {
+  const user = JSON.parse(localStorage.getItem('user'));
   const classes = useStyles();
-  const [dropDownMenu, setDropDownMenu] = React.useState(false);
-  const [assignment1, setAssignment1] = React.useState(false);
-  const [assignment2, setAssignment2] = React.useState(false);
-  const [assignment3, setAssignment3] = React.useState(false);
-  const [assignment4, setAssignment4] = React.useState(false);
-  const [general, setGeneral] = React.useState(false);
+  const [showWorkspaces, setWorkspaces] = React.useState(true);
   const [addChannel, setAddChannel] = React.useState(false);
+
+  React.useEffect(() => {
+    fetchWorkspaces(setWorkspaces);
+  }, []);
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            CSE183 Summer 2021
+            Put current workspace here
           </Typography>
           <IconButton edge="start" className={classes.menuButton}
             color="inherit" aria-label="menu" onClick={(event) => {
-              setDropDownMenu(!dropDownMenu);
+              setWorkspaces(!showWorkspaces);
             }}>
             ⓥ
           </IconButton>
         </Toolbar>
       </AppBar>
-      <div style={{visibility: dropDownMenu ? 'visible' : 'hidden'}}>
+      <div style={{visibility: showWorkspaces ? 'visible' : 'hidden'}}>
         <Typography variant="h6" className={classes.dropDownCategories}>
-          ⓥ Channels
+          Workspaces
         </Typography><br/>
         <IconButton className={classes.dropDownChannels} onClick={(event) => {
-          setAssignment1(!assignment1);
-          setDropDownMenu(false);
+          setWorkspaces(false);
         }}>
-        # Assignment 1
-        </IconButton><br/>
-        <IconButton className={classes.dropDownChannels} onClick={(event) => {
-          setAssignment2(!assignment2);
-          setDropDownMenu(false);
-        }}>
-        # Assignment 2
-        </IconButton><br/>
-        <IconButton className={classes.dropDownChannels} onClick={(event) => {
-          setAssignment3(!assignment3);
-          setDropDownMenu(false);
-        }}>
-        # Assignment 3
-        </IconButton><br/>
-        <IconButton className={classes.dropDownChannels} onClick={(event) => {
-          setAssignment4(!assignment4);
-          setDropDownMenu(false);
-        }}>
-        # Assignment 4
-        </IconButton><br/>
-        <IconButton className={classes.dropDownChannels} onClick={(event) => {
-          setGeneral(!general);
-          setDropDownMenu(false);
-        }}>
-        # General
+        {user.name}
+        {showWorkspaces.name}
         </IconButton><br/>
         <IconButton className={classes.dropDownChannels} onClick={(event) => {
           setAddChannel(!addChannel);
-          setDropDownMenu(false);
+          setWorkspaces(false);
         }}>
-        + Add Channel
+        + Add Workspace
         </IconButton><br/>
-        <Typography variant="h6" className={classes.dropDownCategories}>
-        ⓥ Direct Messages
-        </Typography><br/>
       </div>
     </div>
   );
