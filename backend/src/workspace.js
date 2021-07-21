@@ -16,48 +16,46 @@ function uuid() {
   });
 }
 
-const selectWorkspace = async () => {
-  let select = 'SELECT * FROM workspace';
-  const {rows} = await pool.query(select);
+const selectWorkspace = async (id) => {
+  let select = 'SELECT * FROM workspace WHERE users_id ~* $1';
+  const query = {
+    text: select,
+    values: [id]
+  };
+  const {rows} = await pool.query(query);
   let workspaces = [];
   for(const row of rows) {
+    row.workspace.id = row.workspace_id;
     workspaces.push(row.workspace);
   }
   return workspaces;
 }
 
-const addWorkspace = async (workspace) => {
-  const newWorkspace = {
-    'name': workspace.name,
-  }
-  const insert = 'INSERT INTO workspace(workspace_id, workspace) VALUES ($1, $2)';
-  const query = {
-    text: insert,
-    values: [uuid(), newWorkspace],
-  };
-  
-  // await pool.query(query);
-  // const insert = 'INSERT INTO users_workspace(users_id, workspace_id) VALUES ($1, $2)';
-  // const query = {
-  //   text: insert,
-  //   values: [uuid(), newWorkspace],
-  // };
-  await pool.query(query);
+// const addWorkspace = async (workspace) => {
+//   let id = uuid();
+//   const newWorkspace = {
+//     'name': workspace.name,
+//   }
+//   const insert1 = 'INSERT INTO workspace(workspace_id, workspace) VALUES ($1, $2)';
+//   const query1 = {
+//     text: insert1,
+//     values: [id, newWorkspace],
+//   };
 
-  return newWorkspace;
-}
+//   await pool.query(query1);
+//   const insert2 = 'INSERT INTO users_workspace(users_id, workspace_id) VALUES ($1, $2)';
+//   const query2 = {
+//     text: insert2,
+//     values: [, id],
+//   };
+//   await pool.query(query2);
 
-const deleteWorkspace = async (workspace) => {
-  // const deleted = 'DELETE FROM workspace WHERE workspace->>name = $1';
-  // const query = {
-  //   text: select,
-  //   values: [id]
-  // };
-  // const { rows } = await pool.query(query);
-}
+//   return newWorkspace;
+// }
+
 
 exports.getAll = async(req, res) => {
-  const workspaces = await selectWorkspace();
+  const workspaces = await selectWorkspace(req.query.id);
   if(workspaces){
     res.status(200).json(workspaces);
   }else{
@@ -65,18 +63,10 @@ exports.getAll = async(req, res) => {
   }
 }
 
-exports.post = async(req, res) => {
-  const workspace = await addWorkspace(req.body);
-  if(workspace){
-    res.status(201).json(workspace);
-  }
-}
+// exports.post = async(req, res) => {
+//   const workspace = await addWorkspace(req.body);
+//   if(workspace){
+//     res.status(201).json(workspace);
+//   }
+// }
 
-exports.delete = async(req, res) => {
-  const workspace = await deleteWorkspace(req.query);
-  if(workspaces){
-    res.status(204).json(workspaces);
-  }else{
-    res.status(404).send();
-  }
-}

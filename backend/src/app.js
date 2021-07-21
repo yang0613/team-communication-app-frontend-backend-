@@ -9,6 +9,8 @@ const OpenApiValidator = require('express-openapi-validator');
 const auth = require('./auth');
 const dummy = require('./dummy');
 const workspace = require('./workspace');
+const channel = require('./channel');
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -30,8 +32,7 @@ app.use(
 
 app.get('/v0/dummy', dummy.get);
 app.get('/v0/workspace', auth.check, workspace.getAll);
-app.post('/v0/workspace', auth.check, workspace.post);
-app.delete('/v0/workspace', auth.check, workspace.delete);
+app.get('/v0/channel/:workspace', auth.check, channel.getAll);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({

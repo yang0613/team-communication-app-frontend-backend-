@@ -20,6 +20,7 @@ exports.authenticate = async (req, res) => {
   };
 
   const {rows} = await pool.query(query);
+  const users_id = rows[0].users_id;
   const user = rows[0].users;
   const match = bcrypt.compareSync(password, user.password);
 
@@ -30,7 +31,7 @@ exports.authenticate = async (req, res) => {
         expiresIn: '30m',
         algorithm: 'HS256'
       });
-    res.status(200).json({name: user.name, accessToken: accessToken});
+    res.status(200).json({name: user.name, id: users_id, accessToken: accessToken});
   } else {
     res.status(401).send('Username or password incorrect');
   }

@@ -33,6 +33,14 @@ paths:
   /workspace:
     get:
       description: Returns the users workspaces
+      parameters:
+      - name: id
+        in: query
+        description: ID of the User
+        required: true
+        schema:
+          type: string
+          format: uuid
       responses:
         401:
           description: Unauthorised
@@ -48,59 +56,85 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    post:
-      description: Create new workspace
-      requestBody:
-        description: workspace to add
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Workspace'
-      responses:
-        401:
-          description: Unauthorised
-        201:
-          description: Workspace Create
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Workspace'
-        400:
-          description: Unexpected properties
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-    delete:
-      description: Delete a workspace
+    # post:
+    #   description: Create new workspace
+    #   requestBody:
+    #     description: workspace to add
+    #     required: true
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: '#/components/schemas/Workspace'
+    #   responses:
+    #     401:
+    #       description: Unauthorised
+    #     201:
+    #       description: Workspace Create
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/Workspace'
+    #     400:
+    #       description: Unexpected properties
+    #     default:
+    #       description: unexpected error
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/Error'
+    # delete:
+    #   description: Delete a workspace
+    #   parameters:
+    #   - name: workspace
+    #     in: query
+    #     description: name of workspace
+    #     required: true
+    #     schema:
+    #       type: string
+    #   responses:
+    #     401:
+    #       description: Unauthorised
+    #     204:
+    #       description: Workspace Deleted
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/Workspaces'
+    #     404:
+    #       description: workspace not found
+    #     default:
+    #       description: unexpected error
+    #       content:
+    #         application/json:
+    #           schema:
+    #             $ref: '#/components/schemas/Error'
+  
+  /channel/{workspace}:
+    get:
+      description: Returns the users workspaces
       parameters:
       - name: workspace
-        in: query
-        description: name of workspace
+        in: path
+        description: ID of the Workspace
         required: true
         schema:
           type: string
+          format: uuid
       responses:
         401:
           description: Unauthorised
-        204:
-          description: Workspace Deleted
+        200:
+          description: Channel response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Workspaces'
-        404:
-          description: workspace not found
+                $ref: '#/components/schemas/Channels'
         default:
           description: unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
 components:
   schemas:
     Error:
@@ -131,7 +165,22 @@ components:
       properties:
         name:
           type: string
-    
+        id:
+          type: string
+
+    Channels:
+      type: array
+      items:
+        $ref: '#/components/schemas/Channel'
+
+    Channel:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+  
   securitySchemes:
     bearerAuth:            
       type: http
