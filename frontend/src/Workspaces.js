@@ -1,10 +1,11 @@
+/* eslint-disable */
 // This file is largely based off of https://material-ui.com/components/app-bar/
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
+// import AppBar from '@material-ui/core/AppBar';
+// import Toolbar from '@material-ui/core/Toolbar';
+// import Typography from '@material-ui/core/Typography';
+// import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +39,7 @@ const fetchWorkspaces = (setWorkspaces) => {
   }
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
-  fetch('http://localhost:3010/v0/workspace', {
+  fetch('http://localhost:3010/v0/workspace?user_id=5f1c95b1-50e0-4904-bd79-b2e155a318c1', {
       method: 'get',
       headers: new Headers({
         'Authorization': `Bearer ${bearerToken}`,
@@ -52,7 +53,8 @@ const fetchWorkspaces = (setWorkspaces) => {
       return response.json();
     })
     .then((json) => {
-      setWorkspaces(json.message);
+      console.log(json[0]);
+      setWorkspaces(json[0]);
     })
     .catch((error) => {
       setWorkspaces(error.toString());
@@ -66,8 +68,8 @@ const fetchWorkspaces = (setWorkspaces) => {
 function Workspaces() {
   const user = JSON.parse(localStorage.getItem('user'));
   const classes = useStyles();
-  const [showWorkspaces, setWorkspaces] = React.useState(true);
-  const [addChannel, setAddChannel] = React.useState(false);
+  const [Workspaces, setWorkspaces] = React.useState(true);
+  // const [addChannel, setAddChannel] = React.useState(false);
 
   React.useEffect(() => {
     fetchWorkspaces(setWorkspaces);
@@ -75,7 +77,7 @@ function Workspaces() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      {/* <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             Put current workspace here
@@ -104,7 +106,7 @@ function Workspaces() {
         }}>
         + Add Workspace
         </IconButton><br/>
-      </div>
+      </div> */}
     </div>
   );
 }
