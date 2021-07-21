@@ -10,10 +10,10 @@ DELETE FROM workspace;
 INSERT INTO workspace(workspace) VALUES ('{"name":"CSE183 Summer 2021"}');
 
 DELETE FROM channel;
-INSERT INTO channel(workspace_id, channel) VALUES ('{"name":"Assignment 1"}');
-INSERT INTO channel(workspace_id, channel) VALUES ('{"name":"Assignment 2"}');
-INSERT INTO channel(workspace_id, channel) VALUES ('{"name":"Assignment 3"}');
-INSERT INTO channel(workspace_id, channel) VALUES ('{"name":"Assignment 4"}');
-INSERT INTO channel(workspace_id, channel) VALUES ('{"name":"General"}');
+INSERT INTO channel(channel) VALUES ('{"name":"Assignment 1"}');
+INSERT INTO channel(channel) VALUES ('{"name":"Assignment 2"}');
+INSERT INTO channel(channel) VALUES ('{"name":"Assignment 3"}');
+INSERT INTO channel(channel) VALUES ('{"name":"Assignment 4"}');
+INSERT INTO channel(channel) VALUES ('{"name":"General"}');
 
 
