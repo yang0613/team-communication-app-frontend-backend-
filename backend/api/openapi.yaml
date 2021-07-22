@@ -33,14 +33,6 @@ paths:
   /workspace:
     get:
       description: Returns the users workspaces
-      parameters:
-      - name: user_id
-        in: query
-        description: ID of the User
-        required: true
-        schema:
-          type: string
-          format: uuid
       responses:
         401:
           description: Unauthorised

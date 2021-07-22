@@ -31,6 +31,16 @@ const selectWorkspace = async (id) => {
   return workspaces;
 }
 
+exports.getAll = async(req, res) => {
+  const {id} = req.user;
+  const workspaces = await selectWorkspace(id);
+  if(workspaces){
+    res.status(200).json(workspaces);
+  }else{
+    res.status(404).send();
+  }
+}
+
 // const addWorkspace = async (workspace) => {
 //   let id = uuid();
 //   const newWorkspace = {
@@ -52,16 +62,6 @@ const selectWorkspace = async (id) => {
 
 //   return newWorkspace;
 // }
-
-
-exports.getAll = async(req, res) => {
-  const workspaces = await selectWorkspace(req.query.user_id);
-  if(workspaces){
-    res.status(200).json(workspaces);
-  }else{
-    res.status(404).send();
-  }
-}
 
 // exports.post = async(req, res) => {
 //   const workspace = await addWorkspace(req.body);

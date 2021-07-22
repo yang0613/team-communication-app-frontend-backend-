@@ -26,12 +26,12 @@ exports.authenticate = async (req, res) => {
 
   if (user && match) {
     const accessToken = jwt.sign(
-      {email: user.email, role: user.role}, 
+      {email: user.email, role: user.role, id: users_id}, 
       secrets.accessToken, {
         expiresIn: '30m',
         algorithm: 'HS256'
       });
-    res.status(200).json({name: user.name, id: users_id, accessToken: accessToken});
+    res.status(200).json({name: user.name, accessToken: accessToken});
   } else {
     res.status(401).send('Username or password incorrect');
   }

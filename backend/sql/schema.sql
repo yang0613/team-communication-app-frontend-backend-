@@ -15,8 +15,8 @@ CREATE TABLE workspace(workspace_id VARCHAR, users_id VARCHAR, workspace jsonb);
 -- json objects--
 -- workspace_name--
 
--- DROP TABLE IF EXISTS users_workspace;
--- CREATE TABLE users_workspace(users_id VARCHAR, workspace_id VARCHAR);
+DROP TABLE IF EXISTS users_workspace;
+CREATE TABLE users_workspace(users_id VARCHAR, workspace_id VARCHAR);
 
 DROP TABLE IF EXISTS channel;
 CREATE TABLE channel(channel_id VARCHAR, workspace_id VARCHAR, channel jsonb);
@@ -24,11 +24,11 @@ CREATE TABLE channel(channel_id VARCHAR, workspace_id VARCHAR, channel jsonb);
 -- channel_name--
 -- message--
 
--- DROP TABLE IF EXISTS message;
--- CREATE TABLE message(message_id VARCHAR, channel_id VARCHAR, message jsonb);
---json objects--
---from_user--
---text--
+DROP TABLE IF EXISTS message;
+CREATE TABLE message(message_id VARCHAR, channel_id VARCHAR, message jsonb);
+-- json objects--
+-- from_user--
+-- text--
 
 -- DROP TABLE IF EXISTS directmessage;
 -- CREATE TABLE directmessage(directmessage VARCHAR, from_user VARCHAR, to_user VARCHAR, directmessage jsonb);
