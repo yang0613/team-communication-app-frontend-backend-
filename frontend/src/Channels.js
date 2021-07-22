@@ -1,6 +1,8 @@
 /* eslint-disable */
 import React from 'react';
 import ExpandMoreTwoToneIcon from '@material-ui/icons/ExpandMoreTwoTone';
+import ChannelMsg from './ChannelMsg';
+import Button from '@material-ui/core/Button';
 /**
  * Simple component with no state.
  *
@@ -29,7 +31,7 @@ import ExpandMoreTwoToneIcon from '@material-ui/icons/ExpandMoreTwoTone';
       return response.json();
     })
     .then((json) => {
-      setChannel(json);
+      // setChannel(json);
       localStorage.setItem('channels', JSON.stringify(json));
     })
     .catch((error) => {
@@ -45,20 +47,24 @@ function Channels() {
   const [channel, setChannel] = React.useState([]);
   // Drop down menu for channel
   const [dropdownChannels, setDropdownChannels] = React.useState(true);
-
   React.useEffect(() => {
     fetchChannels(setChannel);
   }, []);
+
+
   return (
-    <div>
+    <div className='channels'>
       <div onClick={() => {setDropdownChannels(!dropdownChannels)}}style={{cursor: 'pointer'}}>
         <ExpandMoreTwoToneIcon></ExpandMoreTwoToneIcon>
         <span>Channels</span>
       </div>
       <div style={{display: dropdownChannels ? 'block' : 'none'}}>
-      {channel.map(c => <div key={c.channel_id}>{c.name}</div>)}
+      {channels ? channels.map(c => <div
+      className='list' key={c.channel_id} name={c.name}></div>): ''}
       </div>
+      <ChannelMsg/>
     </div>
+    
   );
 }
 

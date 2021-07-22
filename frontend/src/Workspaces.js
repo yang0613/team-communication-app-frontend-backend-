@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
  */
 const fetchWorkspaces = async(setWorkspaces) => {
   const item = localStorage.getItem('user');
+
   if (!item) {
     console.log('empty item');
     return;
@@ -74,11 +75,16 @@ function Workspaces() {
   React.useEffect(() => {
     fetchWorkspaces(setWorkspaces);
   }, []);
+
+  const handleChange = () => {
+    setDropdownWorkspaces(!dropdownWorkspaces);
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h5" className={classes.title}>
           {workspace ? workspace[0].name : ''}
           </Typography>
 
@@ -89,8 +95,8 @@ function Workspaces() {
             <ExpandMoreTwoToneIcon className={classes.menuIcon}/>
           </IconButton>
         </Toolbar>
-        <Toolbar style={{display: dropdownWorkspaces ? '' : 'none'}}>
-          <Typography variant="h6" className={classes.title}>
+        <Toolbar onClick={() => handleChange()} style={{display: dropdownWorkspaces ? '' : 'none'}}>
+          <Typography variant="h5" className={classes.title}>
           {workspace ? workspace[1].name : ''}
           </Typography>
         </Toolbar>

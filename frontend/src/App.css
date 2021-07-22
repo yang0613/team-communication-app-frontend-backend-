@@ -1,0 +1,19 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+html{
+  background-color: whitesmoke;
+}
+.channels{
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+.list{
+  font-size: 15px;
+  margin: 15px 25px;
+}

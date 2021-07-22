@@ -1,4 +1,3 @@
-/* eslint-disable */ 
 import React from 'react';
 import Emoji from './Emoji';
 import {useHistory} from 'react-router-dom';
@@ -6,7 +5,7 @@ import Workspaces from './Workspaces';
 import Channels from './Channels';
 import DirectMsg from './DirectMsg';
 import BottomBar from './BottomBar';
-
+import './App.css';
 /**
  * Simple component with no state.
  *
@@ -17,7 +16,7 @@ function Home() {
   const user = JSON.parse(localStorage.getItem('user'));
   const [emoji, setEmoji] = React.useState(false);
   const [name, setName] = React.useState(user ? user.name : '');
-  
+
   if (!user) {
     history.push('/Login');
   }
@@ -30,7 +29,7 @@ function Home() {
     setName('');
     history.push('/Login');
   };
-  
+
   return (
     <div>
       <Workspaces/>
@@ -40,7 +39,6 @@ function Home() {
       <hr/>
       <button onClick={handleLogout}>Logout</button>
       <p/>
-
 
       <button
         onClick={(event) => {
