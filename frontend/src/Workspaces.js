@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
  *
  * @param {function} setWorkspaces set the dummy state
  */
-const fetchWorkspaces = (setWorkspaces) => {
+const fetchWorkspaces = async(setWorkspaces) => {
   const item = localStorage.getItem('user');
   if (!item) {
     console.log('empty item');
@@ -38,7 +38,7 @@ const fetchWorkspaces = (setWorkspaces) => {
   }
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
-  fetch('http://localhost:3010/v0/workspace', {
+  await fetch('http://localhost:3010/v0/workspace', {
       method: 'get',
       headers: new Headers({
         'Authorization': `Bearer ${bearerToken}`,
@@ -52,8 +52,6 @@ const fetchWorkspaces = (setWorkspaces) => {
       return response.json();
     })
     .then((json) => {
-      console.log(json);
-      setWorkspaces(json);
       localStorage.setItem('workspace', JSON.stringify(json));
     })
     .catch((error) => {
@@ -81,7 +79,7 @@ function Workspaces() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            {workspace[0].name}
+          {workspace ? workspace[0].name : ''}
           </Typography>
           
           <IconButton edge="end" className={classes.menuButton}
@@ -93,7 +91,7 @@ function Workspaces() {
         </Toolbar>
         <Toolbar style={{display: dropdownWorkspaces ? '' : 'none'}}>
           <Typography variant="h6" className={classes.title}>
-            {workspace[1].name}
+          {workspace ? workspace[1].name : ''}
           </Typography>
         </Toolbar>
       </AppBar>

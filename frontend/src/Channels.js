@@ -1,19 +1,19 @@
 /* eslint-disable */
 import React from 'react';
-
+import ExpandMoreTwoToneIcon from '@material-ui/icons/ExpandMoreTwoTone';
 /**
  * Simple component with no state.
  *
  * @param {function} setChannel set the dummy state
  */
  const fetchChannels = (setChannel) => {
-  const item = localStorage.getItem('user');
-  if (!item) {
+  const item1 = localStorage.getItem('user');
+  const item2 = localStorage.getItem('workspace');
+  if (!item1 || !item2) {
     return;
   }
-  const workspace = JSON.parse(localStorage.getItem('workspace'));
-  console.log(workspace[0].workspace_id);
-  const user = JSON.parse(item);
+  const workspace = JSON.parse(item2);
+  const user = JSON.parse(item1);
   const bearerToken = user ? user.accessToken : '';
   fetch(`http://localhost:3010/v0/channel/${workspace[0].workspace_id}`, {
       method: 'get',
@@ -29,7 +29,6 @@ import React from 'react';
       return response.json();
     })
     .then((json) => {
-      console.log(json);
       setChannel(json);
       localStorage.setItem('channels', JSON.stringify(json));
     })
@@ -41,7 +40,7 @@ import React from 'react';
  * @return {Channels}
  */
 function Channels() {
-  // const channels = JSON.parse(localStorage.getItem('channels'));
+  const channels = JSON.parse(localStorage.getItem('channels'));
   // Each channel
   const [channel, setChannel] = React.useState([]);
   // Drop down menu for channel
@@ -53,7 +52,8 @@ function Channels() {
   return (
     <div>
       <div onClick={() => {setDropdownChannels(!dropdownChannels)}}style={{cursor: 'pointer'}}>
-        <h3>Channels</h3>
+        <ExpandMoreTwoToneIcon></ExpandMoreTwoToneIcon>
+        <span>Channels</span>
       </div>
       <div style={{display: dropdownChannels ? 'block' : 'none'}}>
       {channel.map(c => <div key={c.channel_id}>{c.name}</div>)}
