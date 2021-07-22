@@ -1,11 +1,10 @@
-/* eslint-disable */
-// This file is largely based off of https://material-ui.com/components/app-bar/
+// This file is based off of https://material-ui.com/components/app-bar/
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-// import AppBar from '@material-ui/core/AppBar';
-// import Toolbar from '@material-ui/core/Toolbar';
-// import Typography from '@material-ui/core/Typography';
-// import IconButton from '@material-ui/core/IconButton';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,12 +16,8 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  dropDownCategories: {
+  dropDownMenu: {
     color: 'black',
-  },
-  dropDownWorkspaces: {
-    color: 'black',
-    fontSize: 16,
   },
 }));
 
@@ -39,7 +34,7 @@ const fetchWorkspaces = (setWorkspaces) => {
   }
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
-  fetch('http://localhost:3010/v0/workspace?user_id=5f1c95b1-50e0-4904-bd79-b2e155a318c1', {
+  fetch('http://localhost:3010/v0/workspace', {
       method: 'get',
       headers: new Headers({
         'Authorization': `Bearer ${bearerToken}`,
@@ -53,8 +48,8 @@ const fetchWorkspaces = (setWorkspaces) => {
       return response.json();
     })
     .then((json) => {
-      console.log(json[0]);
-      setWorkspaces(json[0]);
+      console.log(json);
+      setWorkspaces(json);
     })
     .catch((error) => {
       setWorkspaces(error.toString());
@@ -66,10 +61,13 @@ const fetchWorkspaces = (setWorkspaces) => {
  * @return {Workspaces}
  */
 function Workspaces() {
-  const user = JSON.parse(localStorage.getItem('user'));
+  // Line below might not be needed
+  // const user = JSON.parse(localStorage.getItem('user'));
   const classes = useStyles();
+  // Each workspace
   const [Workspaces, setWorkspaces] = React.useState(true);
-  // const [addChannel, setAddChannel] = React.useState(false);
+  // Drop down menu for workspaces
+  const [dropdownWorkspaces, setDropdownWorkspaces] = React.useState(true);
 
   React.useEffect(() => {
     fetchWorkspaces(setWorkspaces);
@@ -77,36 +75,28 @@ function Workspaces() {
 
   return (
     <div className={classes.root}>
-      {/* <AppBar position="static">
+      <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Put current workspace here
+            {Workspaces[0].name}
           </Typography>
           <IconButton edge="start" className={classes.menuButton}
             color="inherit" aria-label="menu" onClick={(event) => {
-              setWorkspaces(!showWorkspaces);
+              setDropdownWorkspaces(!dropdownWorkspaces);
             }}>
             ⓥ
           </IconButton>
         </Toolbar>
       </AppBar>
-      <div style={{visibility: showWorkspaces ? 'visible' : 'hidden'}}>
-        <Typography variant="h6" className={classes.dropDownCategories}>
-          Workspaces
-        </Typography><br/>
-        <IconButton className={classes.dropDownChannels} onClick={(event) => {
-          setWorkspaces(false);
-        }}>
-        {user.name}
-        {showWorkspaces.name}
-        </IconButton><br/>
-        <IconButton className={classes.dropDownChannels} onClick={(event) => {
-          setAddChannel(!addChannel);
-          setWorkspaces(false);
-        }}>
-        + Add Workspace
-        </IconButton><br/>
-      </div> */}
+      <div style={{visibility: dropdownWorkspaces ? 'visible' : 'hidden'}}>
+        {Workspaces.map((workspace) => (
+          <tr>
+          <IconButton className={classes.dropDownMenu} onClick={(event) => {
+            setDropdownWorkspaces(false);
+          }}>{workspace.name}</IconButton>
+          </tr>
+        ))}
+      </div>
     </div>
   );
 }
