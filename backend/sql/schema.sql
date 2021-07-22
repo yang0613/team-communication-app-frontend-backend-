@@ -30,11 +30,8 @@ CREATE TABLE message(message_id VARCHAR, channel_id VARCHAR, message jsonb);
 -- from_user--
 -- text--
 
--- DROP TABLE IF EXISTS directmessage;
--- CREATE TABLE directmessage(directmessage VARCHAR, from_user VARCHAR, to_user VARCHAR, directmessage jsonb);
+DROP TABLE IF EXISTS directmessage;
+CREATE TABLE directmessage(directmessage_id VARCHAR, from_user_id VARCHAR, to_user_id VARCHAR, directmessage jsonb);
 --json objects--
 --text--
 --status--
-
-
-
