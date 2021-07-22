@@ -26,7 +26,7 @@ exports.authenticate = async (req, res) => {
 
   if (user && match) {
     const accessToken = jwt.sign(
-      {email: user.email, role: user.role, id: users_id}, 
+      {email: user.email, role: user.role, id: users_id, name: user.name},
       secrets.accessToken, {
         expiresIn: '30m',
         algorithm: 'HS256'

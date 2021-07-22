@@ -40,10 +40,10 @@ function uuid() {
   });
 }
 
-const addMessage = async (message) => {
+const addMessage = async (message, user) => {
   let id = uuid();
   const newMessage = {
-    'name': message.name, // Not sure about .name
+    'name': user.name, // Not sure about .name
     'text': message.text,
     'time': message.time,
     'message_id': message.message_id,
@@ -59,7 +59,7 @@ const addMessage = async (message) => {
 }
 
 exports.post = async(req, res) => {
-  const message = await addMessage(req.body);
+  const message = await addMessage(req.body, req.user);
   if(message){
     res.status(201).json(message);
   }
