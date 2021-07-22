@@ -237,7 +237,9 @@ components:
       properties:
         name:
           type: string
-        id:
+        date:
+          type: string
+        text:
           type: string
 
   securitySchemes:
