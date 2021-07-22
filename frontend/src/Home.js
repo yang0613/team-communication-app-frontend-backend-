@@ -1,28 +1,9 @@
 import React from 'react';
 import Emoji from './Emoji';
-import Workspaces from './Workspaces';
 import {useHistory} from 'react-router-dom';
-
-/**
- * Simple component with no state.
- *
- * @param {function} setDummy set the dummy state
- */
-function getDummy(setDummy) {
-  fetch('http://localhost:3010/v0/dummy')
-    .then((response) => {
-      if (!response.ok) {
-        throw response;
-      }
-      return response.json();
-    })
-    .then((json) => {
-      setDummy(json.message);
-    })
-    .catch((error) => {
-      setDummy(error.toString());
-    });
-}
+import Workspaces from './Workspaces';
+import Channels from './Channels';
+import DirectMsg from './DirectMsg';
 
 /**
  * Simple component with no state.
@@ -32,8 +13,6 @@ function getDummy(setDummy) {
 function Home() {
   const history = useHistory();
   const user = JSON.parse(localStorage.getItem('user'));
-
-  const [dummy, setDummy] = React.useState('Click the button!');
   const [emoji, setEmoji] = React.useState(false);
   const [name, setName] = React.useState(user ? user.name : '');
 
@@ -50,20 +29,9 @@ function Home() {
   return (
     <div>
       <Workspaces/>
-      <h2>{name ? name : ''}</h2>
-      <h3 id='instruction'>
-        Click button to connect to the Backend dummy endpoint</h3>
-      <button
-        onClick={(event) => {
-          getDummy(setDummy);
-        }}
-      >
-        Get Dummy
-      </button>
-      <p/>
-      <label>{dummy}</label>
-
-      <p/>
+      <Channels/>
+      <DirectMsg/>
+      <h3>{name ? name : ''}</h3>
       <hr/>
       <button onClick={handleLogout}>Logout</button>
       <p/>
