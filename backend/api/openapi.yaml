@@ -237,8 +237,6 @@ components:
       properties:
         name:
           type: string
-        date:
-          type: string
         text:
           type: string
 

@@ -24,7 +24,7 @@ const selectMessages = async (id) => {
 }
 
 exports.getAll = async(req, res) => {
-  const messages = await selectMessages(req.params.message);
+  const messages = await selectMessages(req.params.channel);
   if(messages){
     res.status(200).json(messages);
   }else{
