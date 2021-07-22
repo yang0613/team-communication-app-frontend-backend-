@@ -100,7 +100,7 @@ paths:
     #         application/json:
     #           schema:
     #             $ref: '#/components/schemas/Error'
-  
+
   /channel/{workspace}:
     get:
       description: Returns the users workspaces
@@ -127,6 +127,60 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
+  /message/{channel}:
+    get:
+      description: Returns the users channel messages
+      parameters:
+      - name: channel
+        in: path
+        description: ID of the channel
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        401:
+          description: Unauthorised
+        200:
+          description: Channel message response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Messages'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      description: Create new message
+      requestBody:
+        description: Message to add
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+      responses:
+        401:
+          description: Unauthorised
+        201:
+          description: Message Create
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        400:
+          description: Unexpected properties
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
   schemas:
     Error:
@@ -172,12 +226,25 @@ components:
           type: string
         id:
           type: string
-  
+
+    Messages:
+      type: array
+      items:
+        $ref: '#/components/schemas/Message'
+
+    Message:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+
   securitySchemes:
-    bearerAuth:            
+    bearerAuth:
       type: http
       scheme: bearer
-      bearerFormat: JWT    
+      bearerFormat: JWT
 
 security:
   - bearerAuth: []
