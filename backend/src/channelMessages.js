@@ -44,6 +44,9 @@ const addMessage = async (message) => {
   let id = uuid();
   const newMessage = {
     'name': message.name, // Not sure about .name
+    'text': message.text,
+    'time': message.time,
+    'message_id': message.message_id,
   }
   // channel_id not needed?
   const insert1 = 'INSERT INTO message(message_id, message) VALUES ($1, $2)';
@@ -61,14 +64,3 @@ exports.post = async(req, res) => {
     res.status(201).json(message);
   }
 }
-
-// Wrong way I think
-// exports.post = async (channel) => {
-//   // Maybe I dont need $3
-//   const insert = 'INSERT INTO message(message_id, channel_id, message) VALUES ($1, $2, $3)';
-//   const query = {
-//     text: insert,
-//     values: [channel.message, message],
-//   };
-//   await pool.query(query);
-// };

@@ -1,4 +1,4 @@
-/* eslint-disable */ 
+/* eslint-disable */
 // This file is based off of https://material-ui.com/components/app-bar/
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginLeft: 'auto', 
+    marginLeft: 'auto',
   },
   menuIcon: {
     fontSize: '40px',
@@ -83,7 +83,7 @@ function Workspaces() {
           <Typography variant="h6" className={classes.title}>
             {workspace[0].name}
           </Typography>
-          
+
           <IconButton edge="end" className={classes.menuButton}
             color="inherit"  aria-label="menu" onClick={(event) => {
               setDropdownWorkspaces(!dropdownWorkspaces);

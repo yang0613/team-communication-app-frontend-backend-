@@ -239,6 +239,12 @@ components:
           type: string
         text:
           type: string
+        time:
+          type: string
+          format: date
+        message_id:
+          type: string
+          format: uuid
 
   securitySchemes:
     bearerAuth:
