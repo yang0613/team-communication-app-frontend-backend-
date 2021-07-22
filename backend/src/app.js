@@ -10,6 +10,7 @@ const auth = require('./auth');
 const dummy = require('./dummy');
 const workspace = require('./workspace');
 const channel = require('./channel');
+const channelMessages = require('./channelMessages');
 
 const app = express();
 app.use(cors());
@@ -33,6 +34,8 @@ app.use(
 app.get('/v0/dummy', dummy.get);
 app.get('/v0/workspace', auth.check, workspace.getAll);
 app.get('/v0/channel/:workspace', auth.check, channel.getAll);
+app.get('/v0/message/:channel', auth.check, channelMessages.getAll);
+app.post('/v0/message/:channel', auth.check, channelMessages.post);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
@@ -43,5 +46,3 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
-
-
