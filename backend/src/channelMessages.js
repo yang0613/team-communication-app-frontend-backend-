@@ -40,10 +40,13 @@ function uuid() {
   });
 }
 
-const addMessage = async (message) => {
+const addMessage = async (message, user) => {
   let id = uuid();
   const newMessage = {
-    'name': message.name, // Not sure about .name
+    'name': user.name, // Not sure about .name
+    'text': message.text,
+    'time': message.time,
+    'message_id': message.message_id,
   }
   // channel_id not needed?
   const insert1 = 'INSERT INTO message(message_id, message) VALUES ($1, $2)';
@@ -56,19 +59,8 @@ const addMessage = async (message) => {
 }
 
 exports.post = async(req, res) => {
-  const message = await addMessage(req.body);
+  const message = await addMessage(req.body, req.user);
   if(message){
     res.status(201).json(message);
   }
 }
-
-// Wrong way I think
-// exports.post = async (channel) => {
-//   // Maybe I dont need $3
-//   const insert = 'INSERT INTO message(message_id, channel_id, message) VALUES ($1, $2, $3)';
-//   const query = {
-//     text: insert,
-//     values: [channel.message, message],
-//   };
-//   await pool.query(query);
-// };
