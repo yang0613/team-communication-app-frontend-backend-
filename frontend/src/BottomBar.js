@@ -6,6 +6,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 import SearchIcon from '@material-ui/icons/Search';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   fixed: {
@@ -14,19 +15,31 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
   },
 }));
+
 /**
  *
  * @return {BottomBar}
  */
 function BottomBar() {
   const classes = useStyles();
+
+  const history = useHistory();
+  const handleHome = () => {
+    history.push('/');
+  };
+  const handleProfile = () => {
+    history.push('/profilePage');
+  };
+
   return (
     <BottomNavigation className={classes.fixed}>
-      <BottomNavigationAction label="Home" icon={<HomeIcon />} />
+      <BottomNavigationAction label="Home" onClick={handleHome}
+        icon={<HomeIcon />} />
       <BottomNavigationAction label="Messages" icon={<ChatIcon />} />
       <BottomNavigationAction label="Mentioned" icon={<AlternateEmailIcon />} />
       <BottomNavigationAction label="Search" icon={<SearchIcon />} />
-      <BottomNavigationAction label="Profile" icon={<PermIdentityIcon />} />
+      <BottomNavigationAction label="Profile" onClick={handleProfile}
+        icon={<PermIdentityIcon />} />
     </BottomNavigation>
   );
 }
