@@ -35,18 +35,18 @@ function Home() {
     <div>
       <Workspaces/>
       <DirectMsg/>
-      <h3>{name ? name : ''}</h3>
-      <hr/>
-      <button onClick={handleLogout}>Logout</button>
-      <p/>
 
-      <button
+      <h3>{name ? name : ''}</h3>
+      <button onClick={handleLogout}>Logout</button>
+
+
+      {/* <button
         onClick={(event) => {
           setEmoji(!emoji);
         }}
       >
         Emoji Picker
-      </button>
+      </button> */}
 
       <p/>
       <div style={{visibility: emoji ? 'visible' : 'hidden'}}>

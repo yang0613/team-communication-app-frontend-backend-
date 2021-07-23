@@ -10,11 +10,17 @@ html{
 .channels{
   font-size: 18px;
   font-weight: 600;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .list{
   font-size: 15px;
-  margin: 15px 25px;
+  margin: 25px 25px;
 
+}
+
+.directMsg{
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 30px;
 }

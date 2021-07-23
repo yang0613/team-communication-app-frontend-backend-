@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
  *
  * @param {function} setWorkspaces set the dummy state
  */
-const fetchWorkspaces = (setWorkspaces, setChannel) => {
+const fetchWorkspaces = (setWorkspaces, setChannel, id) => {
   const item = localStorage.getItem('user');
 
   if (!item) {
@@ -59,7 +59,10 @@ const fetchWorkspaces = (setWorkspaces, setChannel) => {
     .then((json) => {
       setWorkspaces(json);
       localStorage.setItem('workspace', JSON.stringify(json));
-      return fetch(`http://localhost:3010/v0/channel/${json[0].workspace_id}`, {
+      if(!id){
+        id = json[0].workspace_id;
+      }
+      return fetch(`http://localhost:3010/v0/channel/${id}`, {
         method: 'get',
         headers: new Headers({
           'Authorization': `Bearer ${bearerToken}`,
@@ -85,7 +88,6 @@ const fetchWorkspaces = (setWorkspaces, setChannel) => {
       setChannel(error.toString());
     });
 };
-
 /**
  *
  * @return {Workspaces}
@@ -97,14 +99,23 @@ function Workspaces() {
   // Each workspace
   const [workspaces, setWorkspaces] = React.useState([]);
   const [channel, setChannel] = React.useState([]);
+  const [recent, setRecent] = React.useState([]);
   // Drop down menu for workspaces
   const [dropdownWorkspaces, setDropdownWorkspaces] = React.useState(true);
+  let id = null;
   React.useEffect(() => {
-    fetchWorkspaces(setWorkspaces, setChannel);
+    fetchWorkspaces(setWorkspaces, setChannel, id);
   }, []);
 
   const handleChange = () => {
     setDropdownWorkspaces(!dropdownWorkspaces);
+  }
+
+  const handleWorkspace = (id) => {
+    if (id != workspace[0].id){
+      localStorage.removeItem('channels');
+      fetchWorkspaces(setWorkspaces, setChannel, id);
+    }
   }
 
   return (
@@ -115,8 +126,9 @@ function Workspaces() {
             <ExpandMoreTwoToneIcon onClick={() => handleChange()} className={classes.menuIcon}/>
           </div>
         {workspaces.map( w => 
+          
         <Toolbar style={{display: dropdownWorkspaces ? '' : 'none'}}>
-          <Typography variant="h5" className={classes.title} key={w.workspace_id}>{w.name}</Typography>
+          <Typography variant="h5" onClick={() => handleWorkspace(w.workspace_id)}className={classes.title} key={w.workspace_id}>{w.name}</Typography>
         </Toolbar>)}
       </AppBar>
       <Channels workspace={workspace} channel={channel}/>

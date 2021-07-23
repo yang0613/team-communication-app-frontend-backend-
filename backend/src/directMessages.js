@@ -25,8 +25,8 @@ const selectMessages = async (id) => {
 }
 
 exports.getAll = async(req, res) => {
-  // Not sure if 'user' is right
-  const messages = await selectMessages(req.params.user);
+  const {id} = req.user;
+  const messages = await selectMessages(id);
   if(messages){
     res.status(200).json(messages);
   }else{
