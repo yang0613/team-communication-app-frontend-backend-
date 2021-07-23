@@ -45,8 +45,7 @@ function uuid() {
 const addMessage = async (message, user) => {
   let id = uuid();
   const newMessage = {
-    'name': message.name,
-    'userID': message.userID,
+    'name': user.name,
     'status': 'online', // online if youre sending a message
     'time': message.time,
     'directmessage_id': message.directmessage_id,

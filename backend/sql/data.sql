@@ -72,6 +72,6 @@ INSERT INTO message(message_id, channel_id, message) VALUES ('7ebf473f-4448-47fe
 
 DELETE FROM directmessage;
 --Anna Admin--
-INSERT INTO directmessage(directmessage_id, from_user_id, to_user_id, directmessage) VALUES ('be761cf8-a560-4da3-8ef2-f202045a2a90', '5f1c95b1-50e0-4904-bd79-b2e155a318c1', 'bf7187d8-155a-4de3-a745-65873b213e36', '{"name":"Molly Member", "userID":"5f1c95b1-50e0-4904-bd79-b2e155a318c1", "status":"online", "time":"2021-07-10", "directmessage_id":"be761cf8-a560-4da3-8ef2-f202045a2a90", "message":"Want to go see a movie?"}');
+INSERT INTO directmessage(directmessage_id, from_user_id, to_user_id, directmessage) VALUES ('be761cf8-a560-4da3-8ef2-f202045a2a90', '5f1c95b1-50e0-4904-bd79-b2e155a318c1', 'bf7187d8-155a-4de3-a745-65873b213e36', '{"name":"Molly Member", "status":"online", "time":"2021-07-10", "directmessage_id":"be761cf8-a560-4da3-8ef2-f202045a2a90", "message":"Want to go see a movie?"}');
 --Molly Member--
-INSERT INTO directmessage(directmessage_id, from_user_id, to_user_id, directmessage) VALUES ('de7769aa-9b4d-44da-9ba0-8b3997982af1', 'bf7187d8-155a-4de3-a745-65873b213e36', '5f1c95b1-50e0-4904-bd79-b2e155a318c1', '{"name":"Anna Admin", "userID":"bf7187d8-155a-4de3-a745-65873b213e36", "status":"offline", "time":"2021-07-11", "directmessage_id":"de7769aa-9b4d-44da-9ba0-8b3997982af1", "message":"Yes, lets go tomorrow!"}');
+INSERT INTO directmessage(directmessage_id, from_user_id, to_user_id, directmessage) VALUES ('de7769aa-9b4d-44da-9ba0-8b3997982af1', 'bf7187d8-155a-4de3-a745-65873b213e36', '5f1c95b1-50e0-4904-bd79-b2e155a318c1', '{"name":"Anna Admin", "status":"offline", "time":"2021-07-11", "directmessage_id":"de7769aa-9b4d-44da-9ba0-8b3997982af1", "message":"Yes, lets go tomorrow!"}');

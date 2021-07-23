@@ -40,26 +40,25 @@ function uuid() {
   });
 }
 
-const addMessage = async (message, user) => {
+const addMessage = async (message, user, channel) => {
   let id = uuid();
   const newMessage = {
-    'name': user.name, // Not sure about .name
-    'text': message.text,
+    'name': user.name,
     'time': message.time,
     'message_id': message.message_id,
+    'text': message.text,
   }
-  // channel_id not needed?
-  const insert1 = 'INSERT INTO message(message_id, message) VALUES ($1, $2)';
+  const insert1 = 'INSERT INTO message(message_id, channel_id, message) VALUES ($1, $2, $3)';
   const query1 = {
     text: insert1,
-    values: [id, newMessage],
+    values: [id, channel, newMessage],
   };
   await pool.query(query1);
   return newMessage;
 }
 
 exports.post = async(req, res) => {
-  const message = await addMessage(req.body, req.user);
+  const message = await addMessage(req.body, req.user, req.params.channel);
   if(message){
     res.status(201).json(message);
   }

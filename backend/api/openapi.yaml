@@ -156,6 +156,14 @@ paths:
                 $ref: '#/components/schemas/Error'
     post:
       description: Create new message
+      parameters:
+      - name: channel
+        in: path
+        description: ID of the channel
+        required: true
+        schema:
+          type: string
+          format: uuid
       requestBody:
         description: Message to add
         required: true
@@ -209,6 +217,14 @@ paths:
                 $ref: '#/components/schemas/Error'
     post:
       description: Create new direct message
+      parameters:
+      - name: user
+        in: path
+        description: ID of the user
+        required: true
+        schema:
+          type: string
+          format: uuid
       requestBody:
         description: Direct message to add
         required: true
@@ -309,9 +325,6 @@ components:
       properties:
         name:
           type: string
-        userID:
-          type: string
-          format: uuid
         status:
           type: string
         time:
