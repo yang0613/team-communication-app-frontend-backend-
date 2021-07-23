@@ -109,10 +109,6 @@ export default function ChannelMsg({channel}) {
             <ListItemText primary={c.text} secondary={c.name} />
           </ListItem>
           )}
-          {/* <ListItem button>
-            <ListItemText primary="Default notification ringtone"
-            secondary="Tethys" />
-          </ListItem> */}
         </List>
       </Dialog>
     </div>

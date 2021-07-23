@@ -22,31 +22,13 @@ function Home() {
     history.push('/Login');
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('workspace');
-    // localStorage.removeItem('recent_workspace');
-    localStorage.removeItem('channels');
-    setName('');
-    history.push('/Login');
-  };
 
   return (
     <div>
       <Workspaces/>
       <DirectMsg/>
 
-      <h3>{name ? name : ''}</h3>
-      <button onClick={handleLogout}>Logout</button>
 
-
-      {/* <button
-        onClick={(event) => {
-          setEmoji(!emoji);
-        }}
-      >
-        Emoji Picker
-      </button> */}
 
       <p/>
       <div style={{visibility: emoji ? 'visible' : 'hidden'}}>

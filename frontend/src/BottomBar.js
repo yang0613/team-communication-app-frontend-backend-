@@ -33,12 +33,12 @@ function BottomBar() {
 
   return (
     <BottomNavigation className={classes.fixed}>
-      <BottomNavigationAction label="Home" onClick={handleHome}
+      <BottomNavigationAction label="Home" onClick={() =>handleHome()}
         icon={<HomeIcon />} />
       <BottomNavigationAction label="Messages" icon={<ChatIcon />} />
       <BottomNavigationAction label="Mentioned" icon={<AlternateEmailIcon />} />
       <BottomNavigationAction label="Search" icon={<SearchIcon />} />
-      <BottomNavigationAction label="Profile" onClick={handleProfile}
+      <BottomNavigationAction label="Profile" onClick={() =>handleProfile()}
         icon={<PermIdentityIcon />} />
     </BottomNavigation>
   );

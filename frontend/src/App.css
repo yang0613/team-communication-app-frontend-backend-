@@ -24,3 +24,20 @@ html{
   font-weight: 600;
   margin-top: 30px;
 }
+
+
+.status, .user, .profile button{
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.profile button{
+  margin: 10px 20%;
+}
+.logout {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 40px 40%;
+  width: 100%;
+  cursor: pointer;
+}
