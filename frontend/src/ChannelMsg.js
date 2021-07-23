@@ -47,8 +47,8 @@ export default function ChannelMsg({channel}) {
   return (
     <div>
       <List>
-      {channel ? channel.map(c => <ListItem button color="primary" onClick={handleClickOpen}
-      className='list' key={c.channel_id}>{c.name}</ListItem>): ''}
+      {channel.map(c => <ListItem button color="primary" onClick={handleClickOpen}
+      className='list' key={c.channel_id}>{c.name}</ListItem>)}
       </List>
       <Dialog fullScreen open={open}
       onClose={handleClose} TransitionComponent={Transition}>

@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
  *
  * @param {function} setWorkspaces set the dummy state
  */
-const fetchWorkspaces = async(setWorkspaces) => {
+const fetchWorkspaces = (setWorkspaces, setChannel) => {
   const item = localStorage.getItem('user');
 
   if (!item) {
@@ -43,7 +43,7 @@ const fetchWorkspaces = async(setWorkspaces) => {
   }
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
-  await fetch('http://localhost:3010/v0/workspace', {
+  const result = fetch('http://localhost:3010/v0/workspace', {
       method: 'get',
       headers: new Headers({
         'Authorization': `Bearer ${bearerToken}`,
@@ -59,9 +59,30 @@ const fetchWorkspaces = async(setWorkspaces) => {
     .then((json) => {
       setWorkspaces(json);
       localStorage.setItem('workspace', JSON.stringify(json));
+      return fetch(`http://localhost:3010/v0/channel/${json[0].workspace_id}`, {
+        method: 'get',
+        headers: new Headers({
+          'Authorization': `Bearer ${bearerToken}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        }),
+      });
     })
     .catch((error) => {
       setWorkspaces(error.toString());
+    });
+
+    result.then((response) => {
+      if (!response.ok) {
+        throw response;
+      }
+      return response.json();
+    })
+    .then((json) => {
+      setChannel(json);
+      localStorage.setItem('channels', JSON.stringify(json));
+    })
+    .catch((error) => {
+      setChannel(error.toString());
     });
 };
 
@@ -75,11 +96,11 @@ function Workspaces() {
   const classes = useStyles();
   // Each workspace
   const [workspaces, setWorkspaces] = React.useState([]);
-  // const [channel, setChannel] = React.useState([]);
+  const [channel, setChannel] = React.useState([]);
   // Drop down menu for workspaces
   const [dropdownWorkspaces, setDropdownWorkspaces] = React.useState(true);
   React.useEffect(() => {
-    fetchWorkspaces(setWorkspaces);
+    fetchWorkspaces(setWorkspaces, setChannel);
   }, []);
 
   const handleChange = () => {
@@ -97,9 +118,8 @@ function Workspaces() {
         <Toolbar style={{display: dropdownWorkspaces ? '' : 'none'}}>
           <Typography variant="h5" className={classes.title} key={w.workspace_id}>{w.name}</Typography>
         </Toolbar>)}
-        
       </AppBar>
-      <Channels workspace={workspace}/>
+      <Channels workspace={workspace} channel={channel}/>
     </div>
   );
 }
