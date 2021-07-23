@@ -9,7 +9,8 @@ const pool = new Pool({
 });
 
 const selectMessages = async (id) => {
-  let select = 'SELECT * FROM message WHERE channel_id ~* $1';
+  // to_user_id because we want all the messages that were sent to that person
+  let select = 'SELECT * FROM directmessage WHERE to_user_id ~* $1';
   const query = {
     text: select,
     values: [id]
@@ -17,14 +18,15 @@ const selectMessages = async (id) => {
   const {rows} = await pool.query(query);
   let messages = [];
   for(const row of rows) {
-    row.message.message_id = row.message_id;
-    messages.push(row.message);
+    row.directmessage.directmessage_id = row.directmessage_id;
+    messages.push(row.directmessage);
   }
   return messages;
 }
 
 exports.getAll = async(req, res) => {
-  const messages = await selectMessages(req.params.channel);
+  // Not sure if 'user' is right
+  const messages = await selectMessages(req.params.user);
   if(messages){
     res.status(200).json(messages);
   }else{
@@ -40,26 +42,27 @@ function uuid() {
   });
 }
 
-const addMessage = async (message, user, channel) => {
+const addMessage = async (message, user) => {
   let id = uuid();
   const newMessage = {
     'name': user.name,
+    'status': 'online', // online if youre sending a message
     'time': message.time,
-    'message_id': message.message_id,
-    'text': message.text,
+    'directmessage_id': message.directmessage_id,
+    'message': message.message,
   }
-  const insert1 = 'INSERT INTO message(message_id, channel_id, message) VALUES ($1, $2, $3)';
+  const insert1 = 'INSERT INTO directmessage(directmessage_id, from_user_id, to_user_id, directmessage) VALUES ($1, $2, $3, $4)';
   const query1 = {
     text: insert1,
-    values: [id, channel, newMessage],
+    values: [id, message.userID, user.id, newMessage],
   };
   await pool.query(query1);
   return newMessage;
 }
 
-exports.post = async(req, res) => {
-  const message = await addMessage(req.body, req.user, req.params.channel);
-  if(message){
-    res.status(201).json(message);
+  exports.post = async(req, res) => {
+    const message = await addMessage(req.body, req.user);
+    if(message){
+      res.status(201).json(message);
+    }
   }
-}

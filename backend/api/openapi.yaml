@@ -156,6 +156,14 @@ paths:
                 $ref: '#/components/schemas/Error'
     post:
       description: Create new message
+      parameters:
+      - name: channel
+        in: path
+        description: ID of the channel
+        required: true
+        schema:
+          type: string
+          format: uuid
       requestBody:
         description: Message to add
         required: true
@@ -167,11 +175,72 @@ paths:
         401:
           description: Unauthorised
         201:
-          description: Message Create
+          description: Message Created
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
+        400:
+          description: Unexpected properties
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /dm/{user}:
+    get:
+      description: Returns the users direct messages
+      parameters:
+      - name: user
+        in: path
+        description: ID of the user
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        401:
+          description: Unauthorised
+        200:
+          description: Direct message response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectMessages'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      description: Create new direct message
+      parameters:
+      - name: user
+        in: path
+        description: ID of the user
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        description: Direct message to add
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DirectMessage'
+      responses:
+        401:
+          description: Unauthorised
+        201:
+          description: Direct Message Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DirectMessage'
         400:
           description: Unexpected properties
         default:
@@ -245,6 +314,27 @@ components:
         message_id:
           type: string
           format: uuid
+
+    DirectMessages:
+      type: array
+      items:
+        $ref: '#/components/schemas/DirectMessage'
+
+    DirectMessage:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+        time:
+          type: string
+          format: date
+        directmessage_id:
+          type: string
+          format: uuid
+        message:
+          type: string
 
   securitySchemes:
     bearerAuth:
