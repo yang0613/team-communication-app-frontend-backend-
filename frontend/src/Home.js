@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import Emoji from './Emoji';
 import {useHistory} from 'react-router-dom';
@@ -33,7 +34,6 @@ function Home() {
   return (
     <div>
       <Workspaces/>
-      <Channels/>
       <DirectMsg/>
       <h3>{name ? name : ''}</h3>
       <hr/>

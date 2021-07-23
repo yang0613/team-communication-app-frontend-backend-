@@ -32,7 +32,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
  *
  * @return {ChannelMsg}
  */
-export default function ChannelMsg(name) {
+export default function ChannelMsg({channel}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -47,7 +47,7 @@ export default function ChannelMsg(name) {
   return (
     <div>
       <List>
-      {channels ? channels.map(c => <ListItem button color="primary" onClick={handleClickOpen}
+      {channel ? channel.map(c => <ListItem button color="primary" onClick={handleClickOpen}
       className='list' key={c.channel_id}>{c.name}</ListItem>): ''}
       </List>
       <Dialog fullScreen open={open}

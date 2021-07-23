@@ -8,13 +8,13 @@ import Button from '@material-ui/core/Button';
  *
  * @param {function} setChannel set the dummy state
  */
- const fetchChannels = (setChannel) => {
+ const fetchChannels = (setChannel, {workspace}) => {
   const item1 = localStorage.getItem('user');
   const item2 = localStorage.getItem('workspace');
-  if (!item1 || !item2) {
+  if (!item1) {
     return;
   }
-  const workspace = JSON.parse(item2);
+  // const workspace = JSON.parse(item2);
   const user = JSON.parse(item1);
   const bearerToken = user ? user.accessToken : '';
   fetch(`http://localhost:3010/v0/channel/${workspace[0].workspace_id}`, {
@@ -31,24 +31,25 @@ import Button from '@material-ui/core/Button';
       return response.json();
     })
     .then((json) => {
-      // setChannel(json);
+      console.log(json);
+      setChannel(json);
       localStorage.setItem('channels', JSON.stringify(json));
     })
     .catch((error) => {
-      setChannel(error.toString());
+      // setChannel(error.toString());
     });
 };
 /**
  * @return {Channels}
  */
-function Channels() {
+function Channels({workspace}) {
   const channels = JSON.parse(localStorage.getItem('channels'));
   // Each channel
   const [channel, setChannel] = React.useState([]);
   // Drop down menu for channel
   const [dropdownChannels, setDropdownChannels] = React.useState(true);
   React.useEffect(() => {
-    fetchChannels(setChannel);
+    fetchChannels(setChannel, {workspace});
   }, []);
 
 
@@ -58,11 +59,7 @@ function Channels() {
         <ExpandMoreTwoToneIcon></ExpandMoreTwoToneIcon>
         <span>Channels</span>
       </div>
-      <div style={{display: dropdownChannels ? 'block' : 'none'}}>
-      {channels ? channels.map(c => <div
-      className='list' key={c.channel_id} name={c.name}></div>): ''}
-      </div>
-      <ChannelMsg/>
+      <ChannelMsg channel={channel}/>
     </div>
     
   );

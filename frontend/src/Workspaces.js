@@ -7,12 +7,16 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreTwoToneIcon from '@material-ui/icons/ExpandMoreTwoTone';
+import Channels from './Channels';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   menuButton: {
-    marginLeft: 'auto',
+    position: 'absolute',
+    right: '10px',
+    top: '5px',
+    'z-index': 1,
   },
   menuIcon: {
     fontSize: '40px',
@@ -53,6 +57,7 @@ const fetchWorkspaces = async(setWorkspaces) => {
       return response.json();
     })
     .then((json) => {
+      setWorkspaces(json);
       localStorage.setItem('workspace', JSON.stringify(json));
     })
     .catch((error) => {
@@ -70,8 +75,9 @@ function Workspaces() {
   const classes = useStyles();
   // Each workspace
   const [workspaces, setWorkspaces] = React.useState([]);
+  // const [channel, setChannel] = React.useState([]);
   // Drop down menu for workspaces
-  const [dropdownWorkspaces, setDropdownWorkspaces] = React.useState(false);
+  const [dropdownWorkspaces, setDropdownWorkspaces] = React.useState(true);
   React.useEffect(() => {
     fetchWorkspaces(setWorkspaces);
   }, []);
@@ -83,24 +89,17 @@ function Workspaces() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h5" className={classes.title}>
-          {workspace ? workspace[0].name : ''}
-          </Typography>
-
-          <IconButton edge="end" className={classes.menuButton}
-            color="inherit"  aria-label="menu" onClick={(event) => {
-              setDropdownWorkspaces(!dropdownWorkspaces);
-            }}>
-            <ExpandMoreTwoToneIcon className={classes.menuIcon}/>
-          </IconButton>
-        </Toolbar>
-        <Toolbar onClick={() => handleChange()} style={{display: dropdownWorkspaces ? '' : 'none'}}>
-          <Typography variant="h5" className={classes.title}>
-          {workspace ? workspace[1].name : ''}
-          </Typography>
-        </Toolbar>
+          <div className={classes.menuButton}
+            >
+            <ExpandMoreTwoToneIcon onClick={() => handleChange()} className={classes.menuIcon}/>
+          </div>
+        {workspaces.map( w => 
+        <Toolbar style={{display: dropdownWorkspaces ? '' : 'none'}}>
+          <Typography variant="h5" className={classes.title} key={w.workspace_id}>{w.name}</Typography>
+        </Toolbar>)}
+        
       </AppBar>
+      <Channels workspace={workspace}/>
     </div>
   );
 }
